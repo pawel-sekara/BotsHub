@@ -124,8 +124,8 @@ Global $gui_group_itemslooted, _
 		$gui_label_elitetomes_values[UBound($ELITE_TOMES_ARRAY)]
 Global $gui_group_titles, _
 		$gui_label_asuratitle_text, $gui_label_asuratitle_value, $gui_label_deldrimortitle_text, $gui_label_deldrimortitle_value, $gui_label_norntitle_text, $gui_label_norntitle_value, _
-		$gui_label_vanguardtitle_text, $gui_label_vanguardtitle_value, $gui_label_kurzicktitle_text, $gui_label_kurzicktitle_value, $gui_label_luxontitle_text, $gui_label_luxontitle_value, _
-		$gui_label_lightbringertitle_text, $gui_label_lightbringertitle_value, $gui_label_sunspeartitle_text, $gui_label_sunspeartitle_value
+		$gui_label_vanguardtitle_text, $gui_label_vanguardtitle_value, $gui_label_treasuretitle_text, $gui_label_treasuretitle_value, $gui_label_wisdomtitle_text, $gui_label_wisdomtitle_value, _
+		$gui_label_luckytitle_text, $gui_label_luckytitle_value, $gui_label_unluckytitle_text, $gui_label_unluckytitle_value
 Global $gui_group_runoptions, _
 		$gui_checkbox_loopruns, $gui_checkbox_hardmode, $gui_checkbox_emergencytravel, $gui_checkbox_sharememory, $gui_checkbox_automaticteamsetup, $gui_checkbox_useconsumables, $gui_checkbox_useconsets, $gui_checkbox_usescrolls
 Global $gui_group_itemoptions, $gui_checkbox_sortitems, $gui_checkbox_collectdata, $gui_checkbox_salvageintocomponents, $gui_checkbox_farmmaterialsmidrun, _
@@ -249,14 +249,14 @@ Func CreateBotsHubGUI()
 	$gui_label_vanguardtitle_text = GUICtrlCreateLabel('Vanguard:', 341, 360, 60, 16)
 	$gui_label_vanguardtitle_value = GUICtrlCreateLabel('0', 425, 360, 60, 16, $SS_RIGHT)
 
-	$gui_label_kurzicktitle_text = GUICtrlCreateLabel('Kurzick:', 495, 300, 60, 16)
-	$gui_label_kurzicktitle_value = GUICtrlCreateLabel('0', 558, 300, 60, 16, $SS_RIGHT)
-	$gui_label_luxontitle_text = GUICtrlCreateLabel('Luxon:', 495, 320, 60, 16)
-	$gui_label_luxontitle_value = GUICtrlCreateLabel('0', 558, 320, 60, 16, $SS_RIGHT)
-	$gui_label_lightbringertitle_text = GUICtrlCreateLabel('Lightbringer:', 495, 340, 60, 16)
-	$gui_label_lightbringertitle_value = GUICtrlCreateLabel('0', 558, 340, 60, 16, $SS_RIGHT)
-	$gui_label_sunspeartitle_text = GUICtrlCreateLabel('Sunspear:', 495, 360, 60, 16)
-	$gui_label_sunspeartitle_value = GUICtrlCreateLabel('0', 558, 360, 60, 16, $SS_RIGHT)
+	$gui_label_treasuretitle_text = GUICtrlCreateLabel('Treasure Hunter:', 495, 300, 100, 16)
+	$gui_label_treasuretitle_value = GUICtrlCreateLabel('0', 558, 300, 60, 16, $SS_RIGHT)
+	$gui_label_wisdomtitle_text = GUICtrlCreateLabel('Wisdom:', 495, 320, 60, 16)
+	$gui_label_wisdomtitle_value = GUICtrlCreateLabel('0', 558, 320, 60, 16, $SS_RIGHT)
+	$gui_label_luckytitle_text = GUICtrlCreateLabel('Lucky:', 495, 340, 60, 16)
+	$gui_label_luckytitle_value = GUICtrlCreateLabel('0', 558, 340, 60, 16, $SS_RIGHT)
+	$gui_label_unluckytitle_text = GUICtrlCreateLabel('Unlucky:', 495, 360, 60, 16)
+	$gui_label_unluckytitle_value = GUICtrlCreateLabel('0', 558, 360, 60, 16, $SS_RIGHT)
 	GUICtrlCreateGroup('', -99, -99, 1, 1)
 	GUICtrlCreateTabItem('')
 
@@ -1215,10 +1215,10 @@ Func UpdateStats($result, $elapsedTime = 0)
 	Local Static $deldrimorTitlePoints = GetDeldrimorTitle()
 	Local Static $nornTitlePoints = GetNornTitle()
 	Local Static $vanguardTitlePoints = GetVanguardTitle()
-	Local Static $lightbringerTitlePoints = GetLightbringerTitle()
-	Local Static $sunspearTitlePoints = GetSunspearTitle()
-	Local Static $kurzickTitlePoints = GetKurzickTitle()
-	Local Static $luxonTitlePoints = GetLuxonTitle()
+	Local Static $treasureTitlePoints = GetTreasureTitle()
+	Local Static $wisdomTitlePoints = GetWisdomTitle()
+	Local Static $luckyTitlePoints = GetLuckyTitle()
+	Local Static $unluckyTitlePoints = GetUnluckyTitle()
 
 	; $NOT_STARTED = -1 : Before every farm loop
 	If $result == $NOT_STARTED Then
@@ -1256,10 +1256,10 @@ Func UpdateStats($result, $elapsedTime = 0)
 	GUICtrlSetData($gui_label_deldrimortitle_value, GetDeldrimorTitle() - $deldrimorTitlePoints)
 	GUICtrlSetData($gui_label_norntitle_value, GetNornTitle() - $nornTitlePoints)
 	GUICtrlSetData($gui_label_vanguardtitle_value, GetVanguardTitle() - $vanguardTitlePoints)
-	GUICtrlSetData($gui_label_kurzicktitle_value, GetKurzickTitle() - $kurzickTitlePoints)
-	GUICtrlSetData($gui_label_luxontitle_value, GetLuxonTitle() - $luxonTitlePoints)
-	GUICtrlSetData($gui_label_lightbringertitle_value, GetLightbringerTitle() - $lightbringerTitlePoints)
-	GUICtrlSetData($gui_label_sunspeartitle_value, GetSunspearTitle() - $sunspearTitlePoints)
+	GUICtrlSetData($gui_label_treasuretitle_value, GetTreasureTitle() - $treasureTitlePoints)
+	GUICtrlSetData($gui_label_wisdomtitle_value, GetWisdomTitle() - $wisdomTitlePoints)
+	GUICtrlSetData($gui_label_luckytitle_value, GetLuckyTitle() - $luckyTitlePoints)
+	GUICtrlSetData($gui_label_unluckytitle_value, GetUnluckyTitle() - $unluckyTitlePoints)
 
 	UpdateItemStats()
 	Return $timePerRun

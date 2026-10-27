@@ -116,19 +116,12 @@ Global $gui_group_runinfos, _
 		$gui_label_time_text, $gui_label_time_value, $gui_label_timeperrun_text, $gui_label_timeperrun_value, $gui_label_experience_text, $gui_label_experience_value, $gui_label_chests_text, $gui_label_chests_value, _
 		$gui_label_gold_text, $gui_label_gold_value, $gui_label_golditems_text, $gui_label_golditems_value, $gui_label_ectos_text, $gui_label_ectos_value, $gui_label_obsidianshards_text, $gui_label_obsidianshards_value
 Global $gui_group_itemslooted, _
-		$gui_label_lockpicks_text, $gui_label_lockpicks_value, $gui_label_jadebracelets_text, $gui_label_jadebracelets_value, _
-		$gui_label_glacialstones_text, $gui_label_glacialstones_value, $gui_label_destroyercores_text, $gui_label_destroyercores_value, _
-		$gui_label_diessachalices_text, $gui_label_diessachalices_value, $gui_label_rinrelics_text, $gui_label_rinrelics_value, _
-		$gui_label_warsupplies_text, $gui_label_warsupplies_value, $gui_label_ministerialcommendations_text, $gui_label_ministerialcommendations_value, _
-		$gui_label_chunksofdrakeflesh_text, $gui_label_chunksofdrakeflesh_value, $gui_label_skalefins_text, $gui_label_skalefins_value, _
-		$gui_label_wintersdaygifts_text, $gui_label_wintersdaygifts_value, $gui_label_deliciouscakes_text, $gui_label_deliciouscakes_value, _
+		$gui_label_lockpicks_text, $gui_label_lockpicks_value, $gui_label_glacialstones_text, $gui_label_glacialstones_value, _
 		$gui_label_margonitegemstone_text, $gui_label_margonitegemstone_value, $gui_label_stygiangemstone_text, $gui_label_stygiangemstone_value, _
 		$gui_label_titangemstone_text, $gui_label_titangemstone_value, $gui_label_tormentgemstone_text, $gui_label_tormentgemstone_value, _
-		$gui_label_trickortreats_text, $gui_label_trickortreats_value, $gui_label_birthdaycupcakes_text, $gui_label_birthdaycupcakes_value, _
-		$gui_label_goldeneggs_text, $gui_label_goldeneggs_value, $gui_label_pumpkinpieslices_text, $gui_label_pumpkinpieslices_value, _
-		$gui_label_honeycombs_text, $gui_label_honeycombs_value, $gui_label_fruitcakes_text, $gui_label_fruitcakes_value, _
-		$gui_label_sugarybluedrinks_text, $gui_label_sugarybluedrinks_value, $gui_label_chocolatebunnies_text, $gui_label_chocolatebunnies_value, _
-		$gui_label_amberchunks_text, $gui_label_amberchunks_value, $gui_label_jadeiteshards_text, $gui_label_jadeiteshards_value
+		$gui_label_chunksofdrakeflesh_text, $gui_label_chunksofdrakeflesh_value, $gui_label_skalefins_text, $gui_label_skalefins_value, _
+		$gui_label_ministerialcommendations_text, $gui_label_ministerialcommendations_value, $gui_label_tomes_text, $gui_label_tomes_value, _
+		$gui_label_elitetomes_values[UBound($ELITE_TOMES_ARRAY)]
 Global $gui_group_titles, _
 		$gui_label_asuratitle_text, $gui_label_asuratitle_value, $gui_label_deldrimortitle_text, $gui_label_deldrimortitle_value, $gui_label_norntitle_text, $gui_label_norntitle_value, _
 		$gui_label_vanguardtitle_text, $gui_label_vanguardtitle_value, $gui_label_kurzicktitle_text, $gui_label_kurzicktitle_value, $gui_label_luxontitle_text, $gui_label_luxontitle_value, _
@@ -216,7 +209,7 @@ Func CreateBotsHubGUI()
 	GUICtrlCreateGroup('', -99, -99, 1, 1)
 
 	; === Items Looted ===
-	$gui_group_itemslooted = GUICtrlCreateGroup('Items collected', 330, 39, 295, 290)
+	$gui_group_itemslooted = GUICtrlCreateGroup('Items collected', 330, 39, 295, 230)
 	$gui_label_lockpicks_text = GUICtrlCreateLabel('Lockpicks:', 341, 64, 140, 16)
 	$gui_label_lockpicks_value = GUICtrlCreateLabel('0', 425, 64, 60, 16, $SS_RIGHT)
 	$gui_label_margonitegemstone_text = GUICtrlCreateLabel('Margonite Gemstones:', 341, 84, 140, 16)
@@ -229,68 +222,41 @@ Func CreateBotsHubGUI()
 	$gui_label_tormentgemstone_value = GUICtrlCreateLabel('0', 425, 144, 60, 16, $SS_RIGHT)
 	$gui_label_glacialstones_text = GUICtrlCreateLabel('Glacial Stones:', 341, 164, 140, 16)
 	$gui_label_glacialstones_value = GUICtrlCreateLabel('0', 425, 164, 60, 16, $SS_RIGHT)
-	$gui_label_destroyercores_text = GUICtrlCreateLabel('Destroyer Cores:', 341, 184, 140, 16)
-	$gui_label_destroyercores_value = GUICtrlCreateLabel('0', 425, 184, 60, 16, $SS_RIGHT)
-	$gui_label_diessachalices_text = GUICtrlCreateLabel('Diessa Chalices:', 341, 204, 140, 16)
-	$gui_label_diessachalices_value = GUICtrlCreateLabel('0', 425, 204, 60, 16, $SS_RIGHT)
-	$gui_label_rinrelics_text = GUICtrlCreateLabel('Rin Relics:', 341, 224, 140, 16)
-	$gui_label_rinrelics_value = GUICtrlCreateLabel('0', 425, 224, 60, 16, $SS_RIGHT)
-	$gui_label_warsupplies_text = GUICtrlCreateLabel('War Supplies:', 341, 244, 140, 16)
-	$gui_label_warsupplies_value = GUICtrlCreateLabel('0', 425, 244, 60, 16, $SS_RIGHT)
-	$gui_label_ministerialcommendations_text = GUICtrlCreateLabel('Ministerial Commendations:', 341, 264, 140, 16)
-	$gui_label_ministerialcommendations_value = GUICtrlCreateLabel('0', 425, 264, 60, 16, $SS_RIGHT)
-	$gui_label_jadebracelets_text = GUICtrlCreateLabel('Jade Bracelets:', 341, 284, 140, 16)
-	$gui_label_jadebracelets_value = GUICtrlCreateLabel('0', 425, 284, 60, 16, $SS_RIGHT)
-	$gui_label_jadeiteshards_text = GUICtrlCreateLabel('Jadeite Shards:', 341, 304, 140, 16)
-	$gui_label_jadeiteshards_value = GUICtrlCreateLabel('0', 425, 304, 60, 16, $SS_RIGHT)
+	$gui_label_chunksofdrakeflesh_text = GUICtrlCreateLabel('Drake Flesh Chunks:', 341, 184, 140, 16)
+	$gui_label_chunksofdrakeflesh_value = GUICtrlCreateLabel('0', 425, 184, 60, 16, $SS_RIGHT)
+	$gui_label_skalefins_text = GUICtrlCreateLabel('Skale Fins:', 341, 204, 140, 16)
+	$gui_label_skalefins_value = GUICtrlCreateLabel('0', 425, 204, 60, 16, $SS_RIGHT)
+	$gui_label_ministerialcommendations_text = GUICtrlCreateLabel('Ministerial Commendations:', 341, 224, 140, 16)
+	$gui_label_ministerialcommendations_value = GUICtrlCreateLabel('0', 425, 224, 60, 16, $SS_RIGHT)
+	$gui_label_tomes_text = GUICtrlCreateLabel('Tomes:', 341, 244, 140, 16)
+	$gui_label_tomes_value = GUICtrlCreateLabel('0', 425, 244, 60, 16, $SS_RIGHT)
 
-	$gui_label_chunksofdrakeflesh_text = GUICtrlCreateLabel('Drake Flesh Chunks:', 495, 64, 140, 16)
-	$gui_label_chunksofdrakeflesh_value = GUICtrlCreateLabel('0', 558, 64, 60, 16, $SS_RIGHT)
-	$gui_label_skalefins_text = GUICtrlCreateLabel('Skale Fins:', 495, 84, 140, 16)
-	$gui_label_skalefins_value = GUICtrlCreateLabel('0', 558, 84, 60, 16, $SS_RIGHT)
-	$gui_label_wintersdaygifts_text = GUICtrlCreateLabel('Wintersday Gifts:', 495, 104, 140, 16)
-	$gui_label_wintersdaygifts_value = GUICtrlCreateLabel('0', 558, 104, 60, 16, $SS_RIGHT)
-	$gui_label_birthdaycupcakes_text = GUICtrlCreateLabel('Birthday Cupcakes:', 495, 124, 140, 16)
-	$gui_label_birthdaycupcakes_value = GUICtrlCreateLabel('0', 558, 124, 60, 16, $SS_RIGHT)
-	$gui_label_trickortreats_text = GUICtrlCreateLabel('Trick or Treat Bags:', 495, 144, 140, 16)
-	$gui_label_trickortreats_value = GUICtrlCreateLabel('0', 558, 144, 60, 16, $SS_RIGHT)
-	$gui_label_pumpkinpieslices_text = GUICtrlCreateLabel('Slices of Pumpkin Pie:', 495, 164, 140, 16)
-	$gui_label_pumpkinpieslices_value = GUICtrlCreateLabel('0', 558, 164, 60, 16, $SS_RIGHT)
-	$gui_label_goldeneggs_text = GUICtrlCreateLabel('Golden Eggs:', 495, 184, 140, 16)
-	$gui_label_goldeneggs_value = GUICtrlCreateLabel('0', 558, 184, 60, 16, $SS_RIGHT)
-	$gui_label_honeycombs_text = GUICtrlCreateLabel('Honey Combs:', 495, 204, 140, 16)
-	$gui_label_honeycombs_value = GUICtrlCreateLabel('0', 558, 204, 60, 16, $SS_RIGHT)
-	$gui_label_fruitcakes_text = GUICtrlCreateLabel('Fruit Cakes:', 495, 224, 140, 16)
-	$gui_label_fruitcakes_value = GUICtrlCreateLabel('0', 558, 224, 60, 16, $SS_RIGHT)
-	$gui_label_sugarybluedrinks_text = GUICtrlCreateLabel('Sugary Blue Drinks:', 495, 244, 140, 16)
-	$gui_label_sugarybluedrinks_value = GUICtrlCreateLabel('0', 558, 244, 60, 16, $SS_RIGHT)
-	$gui_label_chocolatebunnies_text = GUICtrlCreateLabel('Chocolate Bunnies:', 495, 264, 140, 16)
-	$gui_label_chocolatebunnies_value = GUICtrlCreateLabel('0', 558, 264, 60, 16, $SS_RIGHT)
-	$gui_label_deliciouscakes_text = GUICtrlCreateLabel('Delicious Cakes:', 495, 284, 140, 16)
-	$gui_label_deliciouscakes_value = GUICtrlCreateLabel('0', 558, 284, 60, 16, $SS_RIGHT)
-	$gui_label_amberchunks_text = GUICtrlCreateLabel('Amber Chunks:', 495, 304, 140, 16)
-	$gui_label_amberchunks_value = GUICtrlCreateLabel('0', 558, 304, 60, 16, $SS_RIGHT)
+	For $i = 0 To UBound($ELITE_TOMES_NAMES_ARRAY) - 1
+		; 'Tome' suffix dropped so the longest names do not run into the right-aligned value
+		GUICtrlCreateLabel(StringReplace($ELITE_TOMES_NAMES_ARRAY[$i], ' Tome', '') & ':', 495, 64 + 20 * $i, 140, 16)
+		$gui_label_elitetomes_values[$i] = GUICtrlCreateLabel('0', 558, 64 + 20 * $i, 60, 16, $SS_RIGHT)
+	Next
 	GUICtrlCreateGroup('', -99, -99, 1, 1)
 
 	; === Titles ===
-	$gui_group_titles = GUICtrlCreateGroup('Titles', 330, 335, 295, 111)
-	$gui_label_asuratitle_text = GUICtrlCreateLabel('Asura:', 341, 360, 60, 16)
-	$gui_label_asuratitle_value = GUICtrlCreateLabel('0', 425, 360, 60, 16, $SS_RIGHT)
-	$gui_label_deldrimortitle_text = GUICtrlCreateLabel('Deldrimor:', 341, 380, 60, 16)
-	$gui_label_deldrimortitle_value = GUICtrlCreateLabel('0', 425, 380, 60, 16, $SS_RIGHT)
-	$gui_label_norntitle_text = GUICtrlCreateLabel('Norn:', 341, 400, 60, 16)
-	$gui_label_norntitle_value = GUICtrlCreateLabel('0', 425, 400, 60, 16, $SS_RIGHT)
-	$gui_label_vanguardtitle_text = GUICtrlCreateLabel('Vanguard:', 341, 420, 60, 16)
-	$gui_label_vanguardtitle_value = GUICtrlCreateLabel('0', 425, 420, 60, 16, $SS_RIGHT)
+	$gui_group_titles = GUICtrlCreateGroup('Titles', 330, 275, 295, 111)
+	$gui_label_asuratitle_text = GUICtrlCreateLabel('Asura:', 341, 300, 60, 16)
+	$gui_label_asuratitle_value = GUICtrlCreateLabel('0', 425, 300, 60, 16, $SS_RIGHT)
+	$gui_label_deldrimortitle_text = GUICtrlCreateLabel('Deldrimor:', 341, 320, 60, 16)
+	$gui_label_deldrimortitle_value = GUICtrlCreateLabel('0', 425, 320, 60, 16, $SS_RIGHT)
+	$gui_label_norntitle_text = GUICtrlCreateLabel('Norn:', 341, 340, 60, 16)
+	$gui_label_norntitle_value = GUICtrlCreateLabel('0', 425, 340, 60, 16, $SS_RIGHT)
+	$gui_label_vanguardtitle_text = GUICtrlCreateLabel('Vanguard:', 341, 360, 60, 16)
+	$gui_label_vanguardtitle_value = GUICtrlCreateLabel('0', 425, 360, 60, 16, $SS_RIGHT)
 
-	$gui_label_kurzicktitle_text = GUICtrlCreateLabel('Kurzick:', 495, 360, 60, 16)
-	$gui_label_kurzicktitle_value = GUICtrlCreateLabel('0', 558, 360, 60, 16, $SS_RIGHT)
-	$gui_label_luxontitle_text = GUICtrlCreateLabel('Luxon:', 495, 380, 60, 16)
-	$gui_label_luxontitle_value = GUICtrlCreateLabel('0', 558, 380, 60, 16, $SS_RIGHT)
-	$gui_label_lightbringertitle_text = GUICtrlCreateLabel('Lightbringer:', 495, 400, 60, 16)
-	$gui_label_lightbringertitle_value = GUICtrlCreateLabel('0', 558, 400, 60, 16, $SS_RIGHT)
-	$gui_label_sunspeartitle_text = GUICtrlCreateLabel('Sunspear:', 495, 420, 60, 16)
-	$gui_label_sunspeartitle_value = GUICtrlCreateLabel('0', 558, 420, 60, 16, $SS_RIGHT)
+	$gui_label_kurzicktitle_text = GUICtrlCreateLabel('Kurzick:', 495, 300, 60, 16)
+	$gui_label_kurzicktitle_value = GUICtrlCreateLabel('0', 558, 300, 60, 16, $SS_RIGHT)
+	$gui_label_luxontitle_text = GUICtrlCreateLabel('Luxon:', 495, 320, 60, 16)
+	$gui_label_luxontitle_value = GUICtrlCreateLabel('0', 558, 320, 60, 16, $SS_RIGHT)
+	$gui_label_lightbringertitle_text = GUICtrlCreateLabel('Lightbringer:', 495, 340, 60, 16)
+	$gui_label_lightbringertitle_value = GUICtrlCreateLabel('0', 558, 340, 60, 16, $SS_RIGHT)
+	$gui_label_sunspeartitle_text = GUICtrlCreateLabel('Sunspear:', 495, 360, 60, 16)
+	$gui_label_sunspeartitle_value = GUICtrlCreateLabel('0', 558, 360, 60, 16, $SS_RIGHT)
 	GUICtrlCreateGroup('', -99, -99, 1, 1)
 	GUICtrlCreateTabItem('')
 
@@ -1304,12 +1270,7 @@ Func UpdateItemStats()
 	; All static variables are initialized only once when UpdateItemStats() function is called first time
 	Local Static $itemsToCount[] = [$ID_GLOB_OF_ECTOPLASM, $ID_OBSIDIAN_SHARD, $ID_LOCKPICK, _
 		$ID_MARGONITE_GEMSTONE, $ID_STYGIAN_GEMSTONE, $ID_TITAN_GEMSTONE, $ID_TORMENT_GEMSTONE, _
-		$ID_DIESSA_CHALICE, $ID_GOLDEN_RIN_RELIC, $ID_DESTROYER_CORE, $ID_GLACIAL_STONE, _
-		$ID_WAR_SUPPLIES, $ID_MINISTERIAL_COMMENDATION, $ID_JADE_BRACELET, _
-		$ID_CHUNK_OF_DRAKE_FLESH, $ID_SKALE_FIN, _
-		$ID_WINTERSDAY_GIFT, $ID_TOT, $ID_BIRTHDAY_CUPCAKE, $ID_GOLDEN_EGG, $ID_SLICE_OF_PUMPKIN_PIE, _
-		$ID_HONEYCOMB, $ID_FRUITCAKE, $ID_SUGARY_BLUE_DRINK, $ID_CHOCOLATE_BUNNY, $ID_DELICIOUS_CAKE, _
-		$ID_AMBER_CHUNK, $ID_JADEITE_SHARD]
+		$ID_GLACIAL_STONE, $ID_CHUNK_OF_DRAKE_FLESH, $ID_SKALE_FIN, $ID_MINISTERIAL_COMMENDATION]
 	Local $itemCounts = CountTheseItems($itemsToCount)
 	Local $goldItemsCount = CountGoldItems()
 
@@ -1325,27 +1286,10 @@ Func UpdateItemStats()
 	Local Static $preRunStygianGemstones = $itemCounts[4]
 	Local Static $preRunTitanGemstones = $itemCounts[5]
 	Local Static $preRunTormentGemstones = $itemCounts[6]
-	Local Static $preRunDiessaChalices = $itemCounts[7]
-	Local Static $preRunRinRelics = $itemCounts[8]
-	Local Static $preRunDestroyerCores = $itemCounts[9]
-	Local Static $preRunGlacialStones = $itemCounts[10]
-	Local Static $preRunWarSupplies = $itemCounts[11]
-	Local Static $preRunMinisterialCommendations = $itemCounts[12]
-	Local Static $preRunJadeBracelets = $itemCounts[13]
-	Local Static $preRunChunksOfDrakeFlesh = $itemCounts[14]
-	Local Static $preRunSkaleFins = $itemCounts[15]
-	Local Static $preRunWintersdayGifts = $itemCounts[16]
-	Local Static $preRunTrickOrTreats = $itemCounts[17]
-	Local Static $preRunBirthdayCupcakes = $itemCounts[18]
-	Local Static $preRunGoldenEggs = $itemCounts[19]
-	Local Static $preRunPumpkinPieSlices = $itemCounts[20]
-	Local Static $preRunHoneyCombs = $itemCounts[21]
-	Local Static $preRunFruitCakes = $itemCounts[22]
-	Local Static $preRunSugaryBlueDrinks = $itemCounts[23]
-	Local Static $preRunChocolateBunnies = $itemCounts[24]
-	Local Static $preRunDeliciousCakes = $itemCounts[25]
-	Local Static $preRunAmberChunks = $itemCounts[26]
-	Local Static $preRunJadeiteShards = $itemCounts[27]
+	Local Static $preRunGlacialStones = $itemCounts[7]
+	Local Static $preRunChunksOfDrakeFlesh = $itemCounts[8]
+	Local Static $preRunSkaleFins = $itemCounts[9]
+	Local Static $preRunMinisterialCommendations = $itemCounts[10]
 
 	Local Static $totalEctos = 0
 	Local Static $totalObsidianShards = 0
@@ -1354,27 +1298,10 @@ Func UpdateItemStats()
 	Local Static $totalStygianGemstones = 0
 	Local Static $totalTitanGemstones = 0
 	Local Static $totalTormentGemstones = 0
-	Local Static $totalDiessaChalices = 0
-	Local Static $totalRinRelics = 0
-	Local Static $totalDestroyerCores = 0
 	Local Static $totalGlacialStones = 0
-	Local Static $totalWarSupplies = 0
-	Local Static $totalMinisterialCommendations = 0
-	Local Static $totalJadeBracelets = 0
 	Local Static $totalChunksOfDrakeFlesh = 0
 	Local Static $totalSkaleFins = 0
-	Local Static $totalWintersdayGifts = 0
-	Local Static $totalTrickOrTreats = 0
-	Local Static $totalBirthdayCupcakes = 0
-	Local Static $totalGoldenEggs = 0
-	Local Static $totalPumpkinPieSlices = 0
-	Local Static $totalHoneyCombs = 0
-	Local Static $totalFruitCakes = 0
-	Local Static $totalSugaryBlueDrinks = 0
-	Local Static $totalChocolateBunnies = 0
-	Local Static $totalDeliciousCakes = 0
-	Local Static $totalAmberChunks = 0
-	Local Static $totalJadeiteShards = 0
+	Local Static $totalMinisterialCommendations = 0
 
 	; Items stats, including inventory management situations when some items got sold or stored in chest, to update counters accordingly
 	; Counting income surplus of every item group after each finished run
@@ -1387,27 +1314,10 @@ Func UpdateItemStats()
 	Local $runIncomeStygianGemstones = $itemCounts[4] - $preRunStygianGemstones
 	Local $runIncomeTitanGemstones = $itemCounts[5] - $preRunTitanGemstones
 	Local $runIncomeTormentGemstones = $itemCounts[6] - $preRunTormentGemstones
-	Local $runIncomeDiessaChalices = $itemCounts[7] - $preRunDiessaChalices
-	Local $runIncomeRinRelics = $itemCounts[8] - $preRunRinRelics
-	Local $runIncomeDestroyerCores = $itemCounts[9] - $preRunDestroyerCores
-	Local $runIncomeGlacialStones = $itemCounts[10] - $preRunGlacialStones
-	Local $runIncomeWarSupplies = $itemCounts[11] - $preRunWarSupplies
-	Local $runIncomeMinisterialCommendations = $itemCounts[12] - $preRunMinisterialCommendations
-	Local $runIncomeJadeBracelets = $itemCounts[13] - $preRunJadeBracelets
-	Local $runIncomeChunksOfDrakeFlesh = $itemCounts[14] - $preRunChunksOfDrakeFlesh
-	Local $runIncomeSkaleFins = $itemCounts[15] - $preRunSkaleFins
-	Local $runIncomeWintersdayGifts = $itemCounts[16] - $preRunWintersdayGifts
-	Local $runIncomeTrickOrTreats = $itemCounts[17] - $preRunTrickOrTreats
-	Local $runIncomeBirthdayCupcakes = $itemCounts[18] - $preRunBirthdayCupcakes
-	Local $runIncomeGoldenEggs = $itemCounts[19] - $preRunGoldenEggs
-	Local $runIncomePumpkinPieSlices = $itemCounts[20] - $preRunPumpkinPieSlices
-	Local $runIncomeHoneyCombs = $itemCounts[21] - $preRunHoneyCombs
-	Local $runIncomeFruitCakes = $itemCounts[22] - $preRunFruitCakes
-	Local $runIncomeSugaryBlueDrinks = $itemCounts[23] - $preRunSugaryBlueDrinks
-	Local $runIncomeChocolateBunnies = $itemCounts[24] - $preRunChocolateBunnies
-	Local $runIncomeDeliciousCakes = $itemCounts[25] - $preRunDeliciousCakes
-	Local $runIncomeAmberChunks = $itemCounts[26] - $preRunAmberChunks
-	Local $runIncomeJadeiteShards = $itemCounts[27] - $preRunJadeiteShards
+	Local $runIncomeGlacialStones = $itemCounts[7] - $preRunGlacialStones
+	Local $runIncomeChunksOfDrakeFlesh = $itemCounts[8] - $preRunChunksOfDrakeFlesh
+	Local $runIncomeSkaleFins = $itemCounts[9] - $preRunSkaleFins
+	Local $runIncomeMinisterialCommendations = $itemCounts[10] - $preRunMinisterialCommendations
 
 	; If income is positive then updating cumulative item stats. Income is negative when selling or storing items in chest
 	If $runIncomeGold > 0 Then $totalGold += $runIncomeGold
@@ -1419,27 +1329,10 @@ Func UpdateItemStats()
 	If $runIncomeStygianGemstones > 0 Then $totalStygianGemstones += $runIncomeStygianGemstones
 	If $runIncomeTitanGemstones > 0 Then $totalTitanGemstones += $runIncomeTitanGemstones
 	If $runIncomeTormentGemstones > 0 Then $totalTormentGemstones += $runIncomeTormentGemstones
-	If $runIncomeDiessaChalices > 0 Then $totalDiessaChalices += $runIncomeDiessaChalices
-	If $runIncomeRinRelics > 0 Then $totalRinRelics += $runIncomeRinRelics
-	If $runIncomeDestroyerCores > 0 Then $totalDestroyerCores += $runIncomeDestroyerCores
 	If $runIncomeGlacialStones > 0 Then $totalGlacialStones += $runIncomeGlacialStones
-	If $runIncomeWarSupplies > 0 Then $totalWarSupplies += $runIncomeWarSupplies
-	If $runIncomeMinisterialCommendations > 0 Then $totalMinisterialCommendations += $runIncomeMinisterialCommendations
-	If $runIncomeJadeBracelets > 0 Then $totalJadeBracelets += $runIncomeJadeBracelets
 	If $runIncomeChunksOfDrakeFlesh > 0 Then $totalChunksOfDrakeFlesh += $runIncomeChunksOfDrakeFlesh
 	If $runIncomeSkaleFins > 0 Then $totalSkaleFins += $runIncomeSkaleFins
-	If $runIncomeWintersdayGifts > 0 Then $totalWintersdayGifts += $runIncomeWintersdayGifts
-	If $runIncomeTrickOrTreats > 0 Then $totalTrickOrTreats += $runIncomeTrickOrTreats
-	If $runIncomeBirthdayCupcakes > 0 Then $totalBirthdayCupcakes += $runIncomeBirthdayCupcakes
-	If $runIncomeGoldenEggs > 0 Then $totalGoldenEggs += $runIncomeGoldenEggs
-	If $runIncomePumpkinPieSlices > 0 Then $totalPumpkinPieSlices += $runIncomePumpkinPieSlices
-	If $runIncomeHoneyCombs > 0 Then $totalHoneyCombs += $runIncomeHoneyCombs
-	If $runIncomeFruitCakes > 0 Then $totalFruitCakes += $runIncomeFruitCakes
-	If $runIncomeSugaryBlueDrinks > 0 Then $totalSugaryBlueDrinks += $runIncomeSugaryBlueDrinks
-	If $runIncomeChocolateBunnies > 0 Then $totalChocolateBunnies += $runIncomeChocolateBunnies
-	If $runIncomeDeliciousCakes > 0 Then $totalDeliciousCakes += $runIncomeDeliciousCakes
-	If $runIncomeAmberChunks > 0 Then $totalAmberChunks += $runIncomeAmberChunks
-	If $runIncomeJadeiteShards > 0 Then $totalJadeiteShards += $runIncomeJadeiteShards
+	If $runIncomeMinisterialCommendations > 0 Then $totalMinisterialCommendations += $runIncomeMinisterialCommendations
 
 	; updating GUI labels with cumulative items counters
 	GUICtrlSetData($gui_label_gold_value, Floor($totalGold/1000) & 'k' & Mod($totalGold, 1000) & 'g')
@@ -1451,27 +1344,10 @@ Func UpdateItemStats()
 	GUICtrlSetData($gui_label_stygiangemstone_value, $totalStygianGemstones)
 	GUICtrlSetData($gui_label_titangemstone_value, $totalTitanGemstones)
 	GUICtrlSetData($gui_label_tormentgemstone_value, $totalTormentGemstones)
-	GUICtrlSetData($gui_label_diessachalices_value, $totalDiessaChalices)
-	GUICtrlSetData($gui_label_rinrelics_value, $totalRinRelics)
-	GUICtrlSetData($gui_label_destroyercores_value, $totalDestroyerCores)
 	GUICtrlSetData($gui_label_glacialstones_value, $totalGlacialStones)
-	GUICtrlSetData($gui_label_warsupplies_value, $totalWarSupplies)
-	GUICtrlSetData($gui_label_ministerialcommendations_value, $totalMinisterialCommendations)
-	GUICtrlSetData($gui_label_jadebracelets_value, $totalJadeBracelets)
 	GUICtrlSetData($gui_label_chunksofdrakeflesh_value, $totalChunksOfDrakeFlesh)
 	GUICtrlSetData($gui_label_skalefins_value, $totalSkaleFins)
-	GUICtrlSetData($gui_label_wintersdaygifts_value, $totalWintersdayGifts)
-	GUICtrlSetData($gui_label_trickortreats_value, $totalTrickOrTreats)
-	GUICtrlSetData($gui_label_birthdaycupcakes_value, $totalBirthdayCupcakes)
-	GUICtrlSetData($gui_label_goldeneggs_value, $totalGoldenEggs)
-	GUICtrlSetData($gui_label_pumpkinpieslices_value, $totalPumpkinPieSlices)
-	GUICtrlSetData($gui_label_honeycombs_value, $totalHoneyCombs)
-	GUICtrlSetData($gui_label_fruitcakes_value, $totalFruitCakes)
-	GUICtrlSetData($gui_label_sugarybluedrinks_value, $totalSugaryBlueDrinks)
-	GUICtrlSetData($gui_label_chocolatebunnies_value, $totalChocolateBunnies)
-	GUICtrlSetData($gui_label_deliciouscakes_value, $totalDeliciousCakes)
-	GUICtrlSetData($gui_label_amberchunks_value, $totalAmberChunks)
-	GUICtrlSetData($gui_label_jadeiteshards_value, $totalJadeiteShards)
+	GUICtrlSetData($gui_label_ministerialcommendations_value, $totalMinisterialCommendations)
 
 	; resetting items counters to count income surplus for the next run
 	$preRunGold = GetGoldCharacter()
@@ -1483,27 +1359,53 @@ Func UpdateItemStats()
 	$preRunStygianGemstones = $itemCounts[4]
 	$preRunTitanGemstones = $itemCounts[5]
 	$preRunTormentGemstones = $itemCounts[6]
-	$preRunDiessaChalices = $itemCounts[7]
-	$preRunRinRelics = $itemCounts[8]
-	$preRunDestroyerCores = $itemCounts[9]
-	$preRunGlacialStones = $itemCounts[10]
-	$preRunWarSupplies = $itemCounts[11]
-	$preRunMinisterialCommendations = $itemCounts[12]
-	$preRunJadeBracelets = $itemCounts[13]
-	$preRunChunksOfDrakeFlesh = $itemCounts[14]
-	$preRunSkaleFins = $itemCounts[15]
-	$preRunWintersdayGifts = $itemCounts[16]
-	$preRunTrickOrTreats = $itemCounts[17]
-	$preRunBirthdayCupcakes = $itemCounts[18]
-	$preRunGoldenEggs = $itemCounts[19]
-	$preRunPumpkinPieSlices = $itemCounts[20]
-	$preRunHoneyCombs = $itemCounts[21]
-	$preRunFruitCakes = $itemCounts[22]
-	$preRunSugaryBlueDrinks = $itemCounts[23]
-	$preRunChocolateBunnies = $itemCounts[24]
-	$preRunDeliciousCakes = $itemCounts[25]
-	$preRunAmberChunks = $itemCounts[26]
-	$preRunJadeiteShards = $itemCounts[27]
+	$preRunGlacialStones = $itemCounts[7]
+	$preRunChunksOfDrakeFlesh = $itemCounts[8]
+	$preRunSkaleFins = $itemCounts[9]
+	$preRunMinisterialCommendations = $itemCounts[10]
+
+	UpdateTomeStats()
+EndFunc
+
+
+Func UpdateTomeStats()
+	Local $eliteTomeCounts = CountTheseItems($ELITE_TOMES_ARRAY)
+	Local $regularTomeCounts = CountTheseItems($REGULAR_TOMES_ARRAY)
+
+	Local Static $preRunEliteTomeCounts = $eliteTomeCounts
+	Local Static $preRunRegularTomeCounts = $regularTomeCounts
+	Local Static $totalEliteTomeCounts[UBound($ELITE_TOMES_ARRAY)]
+	Local Static $totalRegularTomeCounts[UBound($REGULAR_TOMES_ARRAY)]
+
+	AddPositiveRunIncome($totalEliteTomeCounts, $eliteTomeCounts, $preRunEliteTomeCounts)
+	AddPositiveRunIncome($totalRegularTomeCounts, $regularTomeCounts, $preRunRegularTomeCounts)
+
+	For $i = 0 To UBound($ELITE_TOMES_ARRAY) - 1
+		GUICtrlSetData($gui_label_elitetomes_values[$i], Number($totalEliteTomeCounts[$i]))
+	Next
+
+	Local $totalRegularTomes = 0
+	Local $regularTomesBreakdown = ''
+	For $i = 0 To UBound($REGULAR_TOMES_ARRAY) - 1
+		$totalRegularTomes += $totalRegularTomeCounts[$i]
+		$regularTomesBreakdown &= $REGULAR_TOMES_NAMES_ARRAY[$i] & ': ' & Number($totalRegularTomeCounts[$i]) & @CRLF
+	Next
+	$regularTomesBreakdown = StringTrimRight($regularTomesBreakdown, 2)
+	GUICtrlSetData($gui_label_tomes_value, $totalRegularTomes)
+	GUICtrlSetTip($gui_label_tomes_text, $regularTomesBreakdown)
+	GUICtrlSetTip($gui_label_tomes_value, $regularTomesBreakdown)
+
+	$preRunEliteTomeCounts = $eliteTomeCounts
+	$preRunRegularTomeCounts = $regularTomeCounts
+EndFunc
+
+
+;~ CountTheseItems leaves zero-count entries empty, which arithmetic treats as 0
+Func AddPositiveRunIncome(ByRef $totals, $counts, $preRunCounts)
+	For $i = 0 To UBound($counts) - 1
+		Local $runIncome = $counts[$i] - $preRunCounts[$i]
+		If $runIncome > 0 Then $totals[$i] += $runIncome
+	Next
 EndFunc
 #EndRegion Statistics management
 

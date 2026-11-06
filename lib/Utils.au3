@@ -1224,6 +1224,39 @@ Func MoveAggroAndKill($x, $y, $log = '', $options = $default_move_aggro_kill_opt
 EndFunc
 
 
+;~ $foes rows are [x, y, log] or [x, y, log, fightRange]
+Func ClearVanquishSection(ByRef $foes, $first, $last, $maxFarmDuration)
+	Local $hasRangeColumn = UBound($foes, 2) > 3
+	Local $range
+	For $i = $first To $last
+		$range = $hasRangeColumn ? $foes[$i][3] : $WIDE_PLAYER_AGGRO_RANGE
+		If CheckStuck($foes[$i][2], 1.5 * $maxFarmDuration) == $FAIL Then Return $FAIL
+		If MoveAggroAndKillInRange($foes[$i][0], $foes[$i][1], $foes[$i][2], $range) == $FAIL Then Return $FAIL
+	Next
+	Info('Section ' & $first & '-' & $last & ' done, foes left: ' & GetFoesToKill())
+	Return $SUCCESS
+EndFunc
+
+
+;~ Patrols can walk out of range while the route passes them - chase whatever is still on compass,
+;~ then walk the route backwards to bring far-away leftovers into compass range
+Func HuntVanquishLeftovers(ByRef $foes, $maxFarmDuration, $huntTimeout = 10 * 60 * 1000)
+	Local $huntTimer = TimerInit()
+	Local $foe
+	For $i = UBound($foes) - 1 To 0 Step -1
+		While Not GetAreaVanquished() And TimerDiff($huntTimer) < $huntTimeout
+			$foe = GetNearestEnemyToAgent(GetMyAgent())
+			If DllStructGetData($foe, 'ID') == 0 Then ExitLoop
+			If MoveAggroAndKillInRange(DllStructGetData($foe, 'X'), DllStructGetData($foe, 'Y'), 'Hunting leftovers, foes left: ' & GetFoesToKill()) == $FAIL Then Return $FAIL
+		WEnd
+		If GetAreaVanquished() Or TimerDiff($huntTimer) >= $huntTimeout Then Return $SUCCESS
+		If CheckStuck('Searching leftovers', 1.5 * $maxFarmDuration) == $FAIL Then Return $FAIL
+		If MoveAggroAndKillInRange($foes[$i][0], $foes[$i][1], 'Searching leftovers near: ' & $foes[$i][2]) == $FAIL Then Return $FAIL
+	Next
+	Return $SUCCESS
+EndFunc
+
+
 ; Call this with $reset=True to (re-)initialize its internal state to track blocked counter and old positions across calls
 Func IsPlayerStuck($minMovement = 5, $stuckTicks = 6, $reset = False)
 	Local Static $oldMyX = Null

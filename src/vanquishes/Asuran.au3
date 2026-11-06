@@ -173,45 +173,45 @@ Func VanquishMagusStones()
 
 	If IsHardmodeEnabled() Then UseConset()
 	UseSummoningStone()
-	If ClearMagusStonesSection($foes, 0, 8) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 0, 8, $ASURAN_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoNearestNPCToCoords(18409, -8474)
 	RandomSleep(2000)
 
-	If ClearMagusStonesSection($foes, 9, 25) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 9, 25, $ASURAN_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoNearestNPCToCoords(-10109, -17520)
 	RandomSleep(2000)
 
-	If ClearMagusStonesSection($foes, 26, 40) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 26, 40, $ASURAN_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoNearestNPCToCoords(-19292, 8994)
 	RandomSleep(2000)
 
-	If ClearMagusStonesSection($foes, 41, 55) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 41, 55, $ASURAN_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoNearestNPCToCoords(-2037, 10758)
 	RandomSleep(2000)
 
-	If ClearMagusStonesSection($foes, 56, 67) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 56, 67, $ASURAN_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoNearestNPCToCoords(4893, 445)
 	RandomSleep(2000)
 
-	If ClearMagusStonesSection($foes, 68, 79) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 68, 79, $ASURAN_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoNearestNPCToCoords(-9231, -2629)
 	RandomSleep(3000)
 
-	If ClearMagusStonesSection($foes, 80, 82) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 80, 82, $ASURAN_FARM_DURATION) == $FAIL Then Return $FAIL
 
-	If HuntMagusStonesLeftovers($foes) == $FAIL Then Return $FAIL
+	If HuntVanquishLeftovers($foes, $ASURAN_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	If Not GetAreaVanquished() Then
 		Error('The map has not been completely vanquished.')
@@ -220,32 +220,4 @@ Func VanquishMagusStones()
 		Info('Map has been fully vanquished.')
 		Return $SUCCESS
 	EndIf
-EndFunc
-
-Func ClearMagusStonesSection(ByRef $foes, $first, $last)
-	For $i = $first To $last
-		If CheckStuck($foes[$i][2], 1.5 * $ASURAN_FARM_DURATION) == $FAIL Then Return $FAIL
-		If MoveAggroAndKillInRange($foes[$i][0], $foes[$i][1], $foes[$i][2]) == $FAIL Then Return $FAIL
-	Next
-	Info('Section ' & $first & '-' & $last & ' done, foes left: ' & GetFoesToKill())
-	Return $SUCCESS
-EndFunc
-
-
-;~ Patrols can walk out of range while the route passes them - chase whatever is still on compass,
-;~ then walk the route backwards to bring far-away leftovers into compass range
-Func HuntMagusStonesLeftovers(ByRef $foes)
-	Local $huntTimer = TimerInit()
-	Local $foe
-	For $i = UBound($foes) - 1 To 0 Step -1
-		While Not GetAreaVanquished() And TimerDiff($huntTimer) < 10 * 60 * 1000
-			$foe = GetNearestEnemyToAgent(GetMyAgent())
-			If DllStructGetData($foe, 'ID') == 0 Then ExitLoop
-			If MoveAggroAndKillInRange(DllStructGetData($foe, 'X'), DllStructGetData($foe, 'Y'), 'Hunting leftovers, foes left: ' & GetFoesToKill()) == $FAIL Then Return $FAIL
-		WEnd
-		If GetAreaVanquished() Or TimerDiff($huntTimer) >= 10 * 60 * 1000 Then Return $SUCCESS
-		If CheckStuck('Searching leftovers', 1.5 * $ASURAN_FARM_DURATION) == $FAIL Then Return $FAIL
-		If MoveAggroAndKillInRange($foes[$i][0], $foes[$i][1], 'Searching leftovers near: ' & $foes[$i][2]) == $FAIL Then Return $FAIL
-	Next
-	Return $SUCCESS
 EndFunc

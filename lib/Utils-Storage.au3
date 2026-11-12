@@ -2045,12 +2045,18 @@ Func UseFirstAvailableConsumable($consumables)
 EndFunc
 
 
-;~ Use Armor of Salvation, Essence of Celerity and Grail of Might
+;~ Use Heroes Trifecta, falling back to Armor of Salvation, Essence of Celerity and Grail of Might
+;~ Assumes Heroes Trifecta grants the same three effects as the separate consets - otherwise it would be reused on every call
 Func UseConset($forceUse = False)
 	If (Not $forceUse And Not $run_options_cache['run.use_consets']) Then Return
-	If GetEffectTimeRemaining(GetEffect($ID_ARMOR_OF_SALVATION_EFFECT)) <= 0 Then UseConsumable($ID_ARMOR_OF_SALVATION, True)
-	If GetEffectTimeRemaining(GetEffect($ID_ESSENCE_OF_CELERITY_EFFECT)) <= 0 Then UseConsumable($ID_ESSENCE_OF_CELERITY, True)
-	If GetEffectTimeRemaining(GetEffect($ID_GRAIL_OF_MIGHT_EFFECT)) <= 0 Then UseConsumable($ID_GRAIL_OF_MIGHT, True)
+	Local $missingArmor = GetEffectTimeRemaining(GetEffect($ID_ARMOR_OF_SALVATION_EFFECT)) <= 0
+	Local $missingEssence = GetEffectTimeRemaining(GetEffect($ID_ESSENCE_OF_CELERITY_EFFECT)) <= 0
+	Local $missingGrail = GetEffectTimeRemaining(GetEffect($ID_GRAIL_OF_MIGHT_EFFECT)) <= 0
+	If Not ($missingArmor Or $missingEssence Or $missingGrail) Then Return
+	If UseConsumable($ID_HEROES_TRIFECTA, True) == $SUCCESS Then Return
+	If $missingArmor Then UseConsumable($ID_ARMOR_OF_SALVATION, True)
+	If $missingEssence Then UseConsumable($ID_ESSENCE_OF_CELERITY, True)
+	If $missingGrail Then UseConsumable($ID_GRAIL_OF_MIGHT, True)
 EndFunc
 
 
@@ -2110,12 +2116,38 @@ Func UseItemFromInventory($itemID, $forceUse = False, $checkXunlaiChest = True)
 EndFunc
 
 
+;~ One Empowering Feast grants all of these effects at once, so it is eaten in place of any of these pcons
+Func GetEmpoweringFeastEffectReplacing($consumableID)
+	Switch $consumableID
+		Case $ID_WAR_SUPPLIES
+			Return $ID_WELL_SUPPLIED
+		Case $ID_SLICE_OF_PUMPKIN_PIE
+			Return $ID_PIE_INDUCED_ECSTASY
+		Case $ID_CANDY_CORN
+			Return $ID_CANDY_CORN_EFFECT
+		Case $ID_GOLDEN_EGG
+			Return $ID_GOLDEN_EGG_EFFECT
+		Case $ID_CANDY_APPLE
+			Return $ID_CANDY_APPLE_EFFECT
+	EndSwitch
+	Return Null
+EndFunc
+
+
 ;~ Uses a consumable from inventory or chest, if present
 Func UseConsumable($consumableID, $forceUse = False, $checkXunlaiChest = True)
 	If (Not $forceUse And Not $run_options_cache['run.consume_consumables']) Then Return
 	If Not IsConsumable($consumableID) Then
 		Warn('Provided item model ID might not correspond to consumable')
 		Return $FAIL
+	EndIf
+	Local $feastEffect = GetEmpoweringFeastEffectReplacing($consumableID)
+	If $feastEffect <> Null Then
+		If GetEffectTimeRemaining(GetEffect($feastEffect)) > 0 Then Return $SUCCESS
+		If UseItemFromInventory($ID_EMPOWERING_FEASTS, $forceUse, $checkXunlaiChest) == $SUCCESS Then
+			Info('Empowering Feast used instead of consumable ' & $consumableID)
+			Return $SUCCESS
+		EndIf
 	EndIf
 	Local $result = UseItemFromInventory($consumableID, $forceUse, $checkXunlaiChest)
 	If $result == $SUCCESS Then Info('Consumable ' & $consumableID & ' used successfully')

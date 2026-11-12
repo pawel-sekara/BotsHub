@@ -1229,11 +1229,11 @@ EndFunc
 ;~ than backtracking the whole map for them at the end
 Func ClearVanquishSection(ByRef $foes, $first, $last, $maxFarmDuration, $sweepTimeout = 3 * 60 * 1000)
 	Local $hasRangeColumn = UBound($foes, 2) > 3
-	Local $range
+	Local $range, $stuckCount = 0
 	For $i = $first To $last
 		$range = $hasRangeColumn ? $foes[$i][3] : $WIDE_PLAYER_AGGRO_RANGE
 		If CheckStuck($foes[$i][2], 1.5 * $maxFarmDuration) == $FAIL Then Return $FAIL
-		If MoveAggroAndKillInRange($foes[$i][0], $foes[$i][1], $foes[$i][2], $range) == $FAIL Then Return $FAIL
+		If MoveToVanquishPoint($foes[$i][0], $foes[$i][1], $foes[$i][2], $range, $stuckCount) == $FAIL Then Return $FAIL
 	Next
 	Local $unreachableFoes[]
 	If ChaseFoesOnCompass(TimerInit(), $sweepTimeout, 'Sweeping section ' & $first & '-' & $last, $unreachableFoes) == $FAIL Then Return $FAIL
@@ -1282,12 +1282,28 @@ EndFunc
 Func HuntVanquishLeftovers(ByRef $foes, $maxFarmDuration, $huntTimeout = 10 * 60 * 1000)
 	Local $huntTimer = TimerInit()
 	Local $unreachableFoes[]
+	Local $stuckCount = 0
 	For $i = UBound($foes) - 1 To 0 Step -1
 		If ChaseFoesOnCompass($huntTimer, $huntTimeout, 'Hunting leftovers', $unreachableFoes) == $FAIL Then Return $FAIL
 		If GetAreaVanquished() Or TimerDiff($huntTimer) >= $huntTimeout Then Return $SUCCESS
 		If CheckStuck('Searching leftovers', 1.5 * $maxFarmDuration) == $FAIL Then Return $FAIL
-		If MoveAggroAndKillInRange($foes[$i][0], $foes[$i][1], 'Searching leftovers near: ' & $foes[$i][2] & ', foes left: ' & GetFoesToKill()) == $FAIL Then Return $FAIL
+		If MoveToVanquishPoint($foes[$i][0], $foes[$i][1], 'Searching leftovers near: ' & $foes[$i][2] & ', foes left: ' & GetFoesToKill(), $WIDE_PLAYER_AGGRO_RANGE, $stuckCount) == $FAIL Then Return $FAIL
 	Next
+	Return $SUCCESS
+EndFunc
+
+
+;~ A single stuck on a route point does not fail the run - the next point usually gets the player moving again
+;~ and foes missed there are picked up by the section sweep or the final leftover hunt
+Func MoveToVanquishPoint($x, $y, $log, $range, ByRef $stuckCount)
+	If MoveAggroAndKillInRange($x, $y, $log, $range) == $SUCCESS Then
+		$stuckCount = 0
+		Return $SUCCESS
+	EndIf
+	If IsPlayerAndPartyWiped() Then Return $FAIL
+	$stuckCount += 1
+	If $stuckCount >= 3 Then Return $FAIL
+	Warn('Could not reach point: ' & $log & ', moving on to the next one')
 	Return $SUCCESS
 EndFunc
 

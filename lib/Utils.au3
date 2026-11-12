@@ -1225,7 +1225,9 @@ EndFunc
 
 
 ;~ $foes rows are [x, y, log] or [x, y, log, fightRange]
-Func ClearVanquishSection(ByRef $foes, $first, $last, $maxFarmDuration)
+;~ Patrols drift off the route while it passes them - sweeping the compass before leaving a section is far cheaper
+;~ than backtracking the whole map for them at the end
+Func ClearVanquishSection(ByRef $foes, $first, $last, $maxFarmDuration, $sweepTimeout = 3 * 60 * 1000)
 	Local $hasRangeColumn = UBound($foes, 2) > 3
 	Local $range
 	For $i = $first To $last
@@ -1233,22 +1235,29 @@ Func ClearVanquishSection(ByRef $foes, $first, $last, $maxFarmDuration)
 		If CheckStuck($foes[$i][2], 1.5 * $maxFarmDuration) == $FAIL Then Return $FAIL
 		If MoveAggroAndKillInRange($foes[$i][0], $foes[$i][1], $foes[$i][2], $range) == $FAIL Then Return $FAIL
 	Next
+	If ChaseFoesOnCompass(TimerInit(), $sweepTimeout, 'Sweeping section ' & $first & '-' & $last) == $FAIL Then Return $FAIL
 	Info('Section ' & $first & '-' & $last & ' done, foes left: ' & GetFoesToKill())
 	Return $SUCCESS
 EndFunc
 
 
-;~ Patrols can walk out of range while the route passes them - chase whatever is still on compass,
-;~ then walk the route backwards to bring far-away leftovers into compass range
+Func ChaseFoesOnCompass($timer, $timeout, $log)
+	Local $foe
+	While Not GetAreaVanquished() And TimerDiff($timer) < $timeout
+		$foe = GetNearestEnemyToAgent(GetMyAgent())
+		If DllStructGetData($foe, 'ID') == 0 Then ExitLoop
+		If MoveAggroAndKillInRange(DllStructGetData($foe, 'X'), DllStructGetData($foe, 'Y'), $log & ', foes left: ' & GetFoesToKill()) == $FAIL Then Return $FAIL
+	WEnd
+	Return $SUCCESS
+EndFunc
+
+
+;~ Last resort for foes that were out of compass range during the section sweeps:
+;~ walk the route backwards to bring them into compass range
 Func HuntVanquishLeftovers(ByRef $foes, $maxFarmDuration, $huntTimeout = 10 * 60 * 1000)
 	Local $huntTimer = TimerInit()
-	Local $foe
 	For $i = UBound($foes) - 1 To 0 Step -1
-		While Not GetAreaVanquished() And TimerDiff($huntTimer) < $huntTimeout
-			$foe = GetNearestEnemyToAgent(GetMyAgent())
-			If DllStructGetData($foe, 'ID') == 0 Then ExitLoop
-			If MoveAggroAndKillInRange(DllStructGetData($foe, 'X'), DllStructGetData($foe, 'Y'), 'Hunting leftovers, foes left: ' & GetFoesToKill()) == $FAIL Then Return $FAIL
-		WEnd
+		If ChaseFoesOnCompass($huntTimer, $huntTimeout, 'Hunting leftovers') == $FAIL Then Return $FAIL
 		If GetAreaVanquished() Or TimerDiff($huntTimer) >= $huntTimeout Then Return $SUCCESS
 		If CheckStuck('Searching leftovers', 1.5 * $maxFarmDuration) == $FAIL Then Return $FAIL
 		If MoveAggroAndKillInRange($foes[$i][0], $foes[$i][1], 'Searching leftovers near: ' & $foes[$i][2]) == $FAIL Then Return $FAIL

@@ -221,7 +221,7 @@ Func VanquishDaladaUplands()
 
 	If ClearVanquishSection($foes, 84, 92, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
 
-	If HuntVanquishLeftovers($foes, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
+	If HuntVanquishLeftovers($foes, $VANGUARD_TITLE_FARM_DURATION, 20 * 60 * 1000) == $FAIL Then Return $FAIL
 
 	If Not GetAreaVanquished() Then
 		Error('The map has not been completely vanquished.')

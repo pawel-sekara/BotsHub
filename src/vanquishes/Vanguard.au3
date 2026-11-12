@@ -215,7 +215,9 @@ Func VanquishDaladaUplands()
 	GoToNPC(GetNearestNPCToCoords(-17546, 341))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 61, 83, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
+	; Split so the compass sweep runs near the 'Looking for Mantids' points 81-82 - from the section end at 83 they are out of compass range
+	If ClearVanquishSection($foes, 61, 82, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 83, 83, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(-2659, 464))

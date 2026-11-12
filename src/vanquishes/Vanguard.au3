@@ -195,7 +195,9 @@ Func VanquishDaladaUplands()
 	GoToNPC(GetNearestNPCToCoords(8565, -3974))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 27, 40, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
+	; Split so the compass sweep runs near the Charr Groups at 34-36 - from the section end at 40 they are out of compass range
+	If ClearVanquishSection($foes, 27, 36, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 37, 40, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(14891, -18146))

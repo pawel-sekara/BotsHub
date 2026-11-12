@@ -1260,7 +1260,7 @@ Func HuntVanquishLeftovers(ByRef $foes, $maxFarmDuration, $huntTimeout = 10 * 60
 		If ChaseFoesOnCompass($huntTimer, $huntTimeout, 'Hunting leftovers') == $FAIL Then Return $FAIL
 		If GetAreaVanquished() Or TimerDiff($huntTimer) >= $huntTimeout Then Return $SUCCESS
 		If CheckStuck('Searching leftovers', 1.5 * $maxFarmDuration) == $FAIL Then Return $FAIL
-		If MoveAggroAndKillInRange($foes[$i][0], $foes[$i][1], 'Searching leftovers near: ' & $foes[$i][2]) == $FAIL Then Return $FAIL
+		If MoveAggroAndKillInRange($foes[$i][0], $foes[$i][1], 'Searching leftovers near: ' & $foes[$i][2] & ', foes left: ' & GetFoesToKill()) == $FAIL Then Return $FAIL
 	Next
 	Return $SUCCESS
 EndFunc

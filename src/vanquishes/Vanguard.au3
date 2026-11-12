@@ -183,64 +183,45 @@ Func VanquishDaladaUplands()
 	Dialog(0x84)
 	Sleep(1000)
 
-	For $i = 0 To 9
-		If CheckStuck($foes[$i][2], 1.5 * $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
-		If MoveAggroAndKillInRange($foes[$i][0], $foes[$i][1], $foes[$i][2]) == $FAIL Then Return $FAIL
-	Next
+	If ClearVanquishSection($foes, 0, 9, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(5816, 11687))
 	Sleep(1000)
 
-	For $i = 10 To 26
-		If CheckStuck($foes[$i][2], 1.5 * $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
-		If MoveAggroAndKillInRange($foes[$i][0], $foes[$i][1], $foes[$i][2]) == $FAIL Then Return $FAIL
-	Next
+	If ClearVanquishSection($foes, 10, 26, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(8565, -3974))
 	Sleep(1000)
 
-	For $i = 27 To 40
-		If CheckStuck($foes[$i][2], 1.5 * $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
-		If MoveAggroAndKillInRange($foes[$i][0], $foes[$i][1], $foes[$i][2]) == $FAIL Then Return $FAIL
-	Next
+	If ClearVanquishSection($foes, 27, 40, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(14891, -18146))
 	Sleep(1000)
 
-	For $i = 41 To 46
-		If CheckStuck($foes[$i][2], 1.5 * $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
-		If MoveAggroAndKillInRange($foes[$i][0], $foes[$i][1], $foes[$i][2]) == $FAIL Then Return $FAIL
-	Next
+	If ClearVanquishSection($foes, 41, 46, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(-4014, -11504))
 	Sleep(1000)
 
-	For $i = 47 To 60
-		If CheckStuck($foes[$i][2], 1.5 * $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
-		If MoveAggroAndKillInRange($foes[$i][0], $foes[$i][1], $foes[$i][2]) == $FAIL Then Return $FAIL
-	Next
+	If ClearVanquishSection($foes, 47, 60, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(-17546, 341))
 	Sleep(1000)
 
-	For $i = 61 To 83
-		If CheckStuck($foes[$i][2], 1.5 * $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
-		If MoveAggroAndKillInRange($foes[$i][0], $foes[$i][1], $foes[$i][2]) == $FAIL Then Return $FAIL
-	Next
+	If ClearVanquishSection($foes, 61, 83, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(-2659, 464))
 	Sleep(1000)
 
-	For $i = 84 To 92
-		If CheckStuck($foes[$i][2], 1.5 * $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
-		If MoveAggroAndKillInRange($foes[$i][0], $foes[$i][1], $foes[$i][2]) == $FAIL Then Return $FAIL
-	Next
+	If ClearVanquishSection($foes, 84, 92, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
+
+	If HuntVanquishLeftovers($foes, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	If Not GetAreaVanquished() Then
 		Error('The map has not been completely vanquished.')

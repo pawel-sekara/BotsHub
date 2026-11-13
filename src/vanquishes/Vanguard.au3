@@ -183,47 +183,47 @@ Func VanquishDaladaUplands()
 	Dialog(0x84)
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 0, 9, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 0, 9, $VANGUARD_TITLE_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(5816, 11687))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 10, 26, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 10, 26, $VANGUARD_TITLE_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(8565, -3974))
 	Sleep(1000)
 
 	; Split so the compass sweep runs near the Charr Groups at 34-36 - from the section end at 40 they are out of compass range
-	If ClearVanquishSection($foes, 27, 36, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
-	If ClearVanquishSection($foes, 37, 40, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 27, 36, $VANGUARD_TITLE_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 37, 40, $VANGUARD_TITLE_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(14891, -18146))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 41, 46, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 41, 46, $VANGUARD_TITLE_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(-4014, -11504))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 47, 60, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 47, 60, $VANGUARD_TITLE_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(-17546, 341))
 	Sleep(1000)
 
 	; Split so the compass sweep runs near the 'Looking for Mantids' points 81-82 - from the section end at 83 they are out of compass range
-	If ClearVanquishSection($foes, 61, 82, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
-	If ClearVanquishSection($foes, 83, 83, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 61, 82, $VANGUARD_TITLE_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 83, 83, $VANGUARD_TITLE_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(-2659, 464))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 84, 92, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 84, 92, $VANGUARD_TITLE_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
 
 	If HuntVanquishLeftovers($foes, $VANGUARD_TITLE_FARM_DURATION, 20 * 60 * 1000) == $FAIL Then Return $FAIL
 

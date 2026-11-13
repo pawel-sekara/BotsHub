@@ -1227,7 +1227,7 @@ EndFunc
 ;~ $foes rows are [x, y, log] or [x, y, log, fightRange]
 ;~ Patrols drift off the route while it passes them - sweeping the compass before leaving a section is far cheaper
 ;~ than backtracking the whole map for them at the end
-Func ClearVanquishSection(ByRef $foes, $first, $last, $maxFarmDuration, $sweepTimeout = 3 * 60 * 1000)
+Func ClearVanquishSection(ByRef $foes, $first, $last, $maxFarmDuration, $sweepTimeout = 0)
 	Local $hasRangeColumn = UBound($foes, 2) > 3
 	Local $range, $stuckCount = 0
 	For $i = $first To $last

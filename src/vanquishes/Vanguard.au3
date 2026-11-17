@@ -209,7 +209,8 @@ Func VanquishDaladaUplands()
 	GoToNPC(GetNearestNPCToCoords(-4014, -11504))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 47, 60, $VANGUARD_TITLE_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	; No compass sweep here - the character gets stuck trying to reach Charr it has no path to
+	If ClearVanquishSection($foes, 47, 60, $VANGUARD_TITLE_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(-17546, 341))

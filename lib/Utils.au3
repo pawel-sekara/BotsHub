@@ -1278,18 +1278,31 @@ EndFunc
 
 
 ;~ Last resort for foes that were out of compass range during the section sweeps:
-;~ walk the route backwards to bring them into compass range
-Func HuntVanquishLeftovers(ByRef $foes, $maxFarmDuration, $huntTimeout = 10 * 60 * 1000)
+;~ first visit $hotspots (same [x, y, log] layout as $foes) where leftovers are known to gather,
+;~ then walk the route backwards to bring the rest into compass range
+Func HuntVanquishLeftovers(ByRef $foes, $maxFarmDuration, $huntTimeout = 10 * 60 * 1000, $hotspots = Null)
 	Local $huntTimer = TimerInit()
 	Local $unreachableFoes[]
 	Local $stuckCount = 0
+	If ChaseFoesOnCompass($huntTimer, $huntTimeout, 'Hunting leftovers', $unreachableFoes) == $FAIL Then Return $FAIL
+	If IsArray($hotspots) Then
+		For $i = 0 To UBound($hotspots) - 1
+			If GetAreaVanquished() Or TimerDiff($huntTimer) >= $huntTimeout Then Return $SUCCESS
+			If SearchVanquishLeftoversNear($hotspots[$i][0], $hotspots[$i][1], $hotspots[$i][2], $maxFarmDuration, $huntTimer, $huntTimeout, $unreachableFoes, $stuckCount) == $FAIL Then Return $FAIL
+		Next
+	EndIf
 	For $i = UBound($foes) - 1 To 0 Step -1
-		If ChaseFoesOnCompass($huntTimer, $huntTimeout, 'Hunting leftovers', $unreachableFoes) == $FAIL Then Return $FAIL
 		If GetAreaVanquished() Or TimerDiff($huntTimer) >= $huntTimeout Then Return $SUCCESS
-		If CheckStuck('Searching leftovers', 1.5 * $maxFarmDuration) == $FAIL Then Return $FAIL
-		If MoveToVanquishPoint($foes[$i][0], $foes[$i][1], 'Searching leftovers near: ' & $foes[$i][2] & ', foes left: ' & GetFoesToKill(), $WIDE_PLAYER_AGGRO_RANGE, $stuckCount) == $FAIL Then Return $FAIL
+		If SearchVanquishLeftoversNear($foes[$i][0], $foes[$i][1], $foes[$i][2], $maxFarmDuration, $huntTimer, $huntTimeout, $unreachableFoes, $stuckCount) == $FAIL Then Return $FAIL
 	Next
 	Return $SUCCESS
+EndFunc
+
+
+Func SearchVanquishLeftoversNear($x, $y, $log, $maxFarmDuration, $huntTimer, $huntTimeout, ByRef $unreachableFoes, ByRef $stuckCount)
+	If CheckStuck('Searching leftovers', 1.5 * $maxFarmDuration) == $FAIL Then Return $FAIL
+	If MoveToVanquishPoint($x, $y, 'Searching leftovers near: ' & $log & ', foes left: ' & GetFoesToKill(), $WIDE_PLAYER_AGGRO_RANGE, $stuckCount) == $FAIL Then Return $FAIL
+	Return ChaseFoesOnCompass($huntTimer, $huntTimeout, 'Hunting leftovers', $unreachableFoes)
 EndFunc
 
 

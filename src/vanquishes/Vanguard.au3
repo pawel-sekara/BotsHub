@@ -225,7 +225,14 @@ Func VanquishDaladaUplands()
 
 	If ClearVanquishSection($foes, 84, 92, $VANGUARD_TITLE_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
 
-	If HuntVanquishLeftovers($foes, $VANGUARD_TITLE_FARM_DURATION, 20 * 60 * 1000) == $FAIL Then Return $FAIL
+	; Leftover Charr most often stay near the Charr Groups at 35-36; the approach reuses route points so the path is known to work
+	Local Static $leftoverHotspots[][] = [ _
+		[1606,		22,		'Charr Patrol'			], _
+		[5219,		-5017,	'Charr Patrol'			], _
+		[8903,		-1801,	'Second Skale'			], _
+		[12265,		-1946,	'Charr leftovers spot'	] _
+	]
+	If HuntVanquishLeftovers($foes, $VANGUARD_TITLE_FARM_DURATION, 20 * 60 * 1000, $leftoverHotspots) == $FAIL Then Return $FAIL
 
 	If Not GetAreaVanquished() Then
 		Error('The map has not been completely vanquished.')

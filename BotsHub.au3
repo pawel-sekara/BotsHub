@@ -94,6 +94,7 @@ Opt('MustDeclareVars', True)
 #include 'src/titles/LDOA.au3'
 #include 'src/utilities/Follower.au3'
 #include 'src/utilities/OmniFarmer.au3'
+#include 'src/utilities/RouteRecorder.au3'
 #include 'src/utilities/TestSuite.au3'
 #include 'src/vanquishes/Asuran.au3'
 #include 'src/vanquishes/KurzickFerndale.au3'
@@ -574,6 +575,7 @@ Func FillFarmMap()
 	AddFarmToFarmMap(	'OmniFarm',						OmniFarm,						5,					5 * 60 * 1000)
 	AddFarmToFarmMap(	'Pongmei',						PongmeiChestFarm,				5,					$PONGMEI_FARM_DURATION)
 	AddFarmToFarmMap(	'Raptors',						RaptorsFarm,					5,					$RAPTORS_FARM_DURATION)
+	AddFarmToFarmMap(	'Route Recorder',				RouteRecorderFarm,				0,					3 * 60 * 60 * 1000)
 	AddFarmToFarmMap(	'Skale Fins',					SkaleFinsFarm,					5,					$SKALE_FINS_FARM_DURATION)
 	AddFarmToFarmMap(	'Skrees',						SkreesFarm,						10,					$SKREES_FARM_DURATION)
 	AddFarmToFarmMap(	'SoO',							SoOFarm,						15,					$SOO_FARM_DURATION)

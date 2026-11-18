@@ -2080,6 +2080,14 @@ Func UseSummoningStone($forceUse = False, $preferredSummon = Null)
 EndFunc
 
 
+;~ Infinite items cost nothing, so the 'consume consumables' option does not apply to them
+Func UseInfiniteConsumables()
+	If GetMapType() <> $ID_EXPLORABLE Then Return
+	If GetEffectTimeRemaining(GetEffect($ID_INFINITE_STALKERS_RATION_EFFECT)) <= 0 Then UseItemFromInventory($ID_INFINITE_STALKERS_RATION, True, False)
+	If GetEffectTimeRemaining(GetEffect($ID_INFINITE_BIRDS_EYE_COMPASS_EFFECT)) <= 0 Then UseItemFromInventory($ID_INFINITE_BIRDS_EYE_COMPASS, True, False)
+EndFunc
+
+
 ;~ Uses a consumable from inventory or xunlai, if present
 Func UseCitySpeedBoost($forceUse = False)
 	If (Not $forceUse And Not $run_options_cache['run.consume_consumables']) Then Return $FAIL

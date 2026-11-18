@@ -89,6 +89,7 @@ Opt('GUICloseOnESC', False)
 #include '../src/vanquishes/LuxonMountQinkai.au3'
 #include '../src/vanquishes/LuxonSilentSurf.au3'
 #include '../src/vanquishes/Norn.au3'
+#include '../src/vanquishes/NornBoreal.au3'
 #include '../src/vanquishes/Vanguard.au3'
 #EndRegion Includes
 
@@ -101,7 +102,7 @@ Global Const $AVAILABLE_BAG_COUNTS = '|1|2|3|4|5'
 Global Const $AVAILABLE_WEAPON_SLOTS = '|0|1|2|3|4'
 Global Const $KIT_AMOUNT_CHOICE = '|0|1|2|3|4|5|6|7|8|9|10|11|12'
 Global Const $AVAILABLE_FARMS = '|Asuran|Boreal|CoF|Corsairs|Deldrimor|Drake Flesh|Dragon Moss|Eden Iris|Feathers|Follower|FoW|FoW Tower of Courage|Froggy|Gemstones|Gemstone Margonite|Gemstone Stygian|Gemstone Torment|' & _
-	'Glint Challenge|Jade Brotherhood|Kappa|Kilroy|Kournans|Kurzick Ferndale|Kurzick Drazach|LDOA|Lightbringer & Sunspear|Lightbringer|LuxonMQ|LuxonSS|Mantids|Ministerial Commendations|Minotaurs|Nexus Challenge|Norn|OmniFarm|Pongmei|' & _
+	'Glint Challenge|Jade Brotherhood|Kappa|Kilroy|Kournans|Kurzick Ferndale|Kurzick Drazach|LDOA|Lightbringer & Sunspear|Lightbringer|LuxonMQ|LuxonSS|Mantids|Ministerial Commendations|Minotaurs|Nexus Challenge|Norn|Norn_boreal|OmniFarm|Pongmei|' & _
 	'Raptors|Route Recorder|Skale Fins|Skrees|SoO|SpiritSlaves|Sunspear Armor|Tasca|TunnelsOfTheForsaken|Underworld|UnderworldPantheon|Vaettirs|Vanguard|Voltaic|War Supply Keiran|Zodiac|Manual Mode|Storage|Tests|Tonic Spammer|TestSuite'
 
 #Region GUI
@@ -1087,6 +1088,10 @@ Func UpdateFarmDescription($farm)
 			GUICtrlSetData($gui_edit_characterbuilds, $generalCharacterSetup)
 			GUICtrlSetData($gui_edit_heroesbuilds, $generalHeroesSetup)
 			GUICtrlSetData($gui_label_farminformations, $NORN_FARM_INFORMATIONS)
+		Case 'Norn_boreal'
+			GUICtrlSetData($gui_edit_characterbuilds, $generalCharacterSetup)
+			GUICtrlSetData($gui_edit_heroesbuilds, $generalHeroesSetup)
+			GUICtrlSetData($gui_label_farminformations, $NORN_BOREAL_FARM_INFORMATIONS)
 		Case 'Omnifarm'
 			GUICtrlSetData($gui_label_farminformations, '')
 		Case 'Pongmei'

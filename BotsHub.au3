@@ -102,6 +102,7 @@ Opt('MustDeclareVars', True)
 #include 'src/vanquishes/LuxonMountQinkai.au3'
 #include 'src/vanquishes/LuxonSilentSurf.au3'
 #include 'src/vanquishes/Norn.au3'
+#include 'src/vanquishes/NornBoreal.au3'
 #include 'src/vanquishes/Vanguard.au3'
 #EndRegion Includes
 
@@ -572,6 +573,7 @@ Func FillFarmMap()
 	AddFarmToFarmMap(	'Minotaurs',					MinotaursFarm,					5,					$MINOTAURS_FARM_DURATION)
 	AddFarmToFarmMap(	'Nexus Challenge',				NexusChallengeFarm,				5,					$NEXUS_CHALLENGE_FARM_DURATION)
 	AddFarmToFarmMap(	'Norn',							NornTitleFarm,					5,					$NORN_FARM_DURATION)
+	AddFarmToFarmMap(	'Norn_boreal',					NornBorealFarm,					5,					$NORN_BOREAL_FARM_DURATION)
 	AddFarmToFarmMap(	'OmniFarm',						OmniFarm,						5,					5 * 60 * 1000)
 	AddFarmToFarmMap(	'Pongmei',						PongmeiChestFarm,				5,					$PONGMEI_FARM_DURATION)
 	AddFarmToFarmMap(	'Raptors',						RaptorsFarm,					5,					$RAPTORS_FARM_DURATION)

@@ -8,15 +8,18 @@
 
 Global Const $ROUTE_RECORDER_INFORMATIONS = 'Records a vanquish route while you play it manually in an explorable area.' & @CRLF _
 	& 'Route points are added as you walk, and kills mark the spot as a group.' & @CRLF _
-	& 'F9 - mark current position, F10 - blessing (talk only), F11 - blessing with the accept button (Dialog 0x84).' & @CRLF _
+	& 'F8 - sweep the compass here (ends the section), F9 - mark current position, F10 - blessing (talk only), F11 - blessing with the accept button (Dialog 0x84).' & @CRLF _
 	& 'Recording stops on bot stop or map change, output goes to logs/route-<mapID>.au3'
 
 Global Const $ROUTE_RECORDER_POINT_SPACING = 1200
 Global Const $ROUTE_RECORDER_GROUP_SPACING = 500
+Global Const $ROUTE_RECORDER_SWEEP_TIMEOUT_CODE = '3 * 60 * 1000'
 
 Global $route_recorder_points[0][3]
 ; [index of the first route point after the blessing, NPC x, NPC y, needs accept dialog]
 Global $route_recorder_blessings[0][4]
+; Indexes of route points that end a section with a compass sweep
+Global $route_recorder_sweeps[0]
 ; Hotkey callbacks only leave a request - the main loop reads game memory and records
 Global $route_recorder_request = ''
 
@@ -26,13 +29,15 @@ Func RouteRecorderFarm()
 		Return $PAUSE
 	EndIf
 	Local $mapID = GetMapID()
-	Local $noPoints[0][3], $noBlessings[0][4]
+	Local $noPoints[0][3], $noBlessings[0][4], $noSweeps[0]
 	$route_recorder_points = $noPoints
 	$route_recorder_blessings = $noBlessings
+	$route_recorder_sweeps = $noSweeps
+	HotKeySet('{F8}', 'RouteRecorderMarkSweep')
 	HotKeySet('{F9}', 'RouteRecorderMarkPoint')
 	HotKeySet('{F10}', 'RouteRecorderMarkBlessing')
 	HotKeySet('{F11}', 'RouteRecorderMarkBlessingWithAccept')
-	Info('Recording route in map ' & $mapID & ' - F9 point, F10 blessing, F11 blessing with accept')
+	Info('Recording route in map ' & $mapID & ' - F8 sweep, F9 point, F10 blessing, F11 blessing with accept')
 
 	Local $foesLeft = GetFoesToKill(), $currentFoesLeft, $me, $x, $y, $changed
 	While $runtime_status == 'RUNNING' And GetMapID() == $mapID
@@ -43,6 +48,8 @@ Func RouteRecorderFarm()
 		$currentFoesLeft = GetFoesToKill()
 		If $route_recorder_request == 'point' Then
 			AddRecordedRoutePoint($x, $y, 'Marked point')
+		ElseIf $route_recorder_request == 'sweep' Then
+			RecordSweep($x, $y)
 		ElseIf $route_recorder_request <> '' Then
 			RecordBlessing($me, $route_recorder_request == 'blessing-accept')
 		ElseIf $currentFoesLeft < $foesLeft Then
@@ -58,12 +65,18 @@ Func RouteRecorderFarm()
 		Sleep(300)
 	WEnd
 
+	HotKeySet('{F8}')
 	HotKeySet('{F9}')
 	HotKeySet('{F10}')
 	HotKeySet('{F11}')
 	WriteRecordedRoute($mapID)
-	Info('Route recording finished: ' & UBound($route_recorder_points) & ' points, ' & UBound($route_recorder_blessings) & ' blessings')
+	Info('Route recording finished: ' & UBound($route_recorder_points) & ' points, ' & UBound($route_recorder_blessings) & ' blessings, ' & UBound($route_recorder_sweeps) & ' sweeps')
 	Return $PAUSE
+EndFunc
+
+
+Func RouteRecorderMarkSweep()
+	$route_recorder_request = 'sweep'
 EndFunc
 
 
@@ -121,6 +134,14 @@ Func RecordBlessing($me, $withAccept)
 EndFunc
 
 
+Func RecordSweep($x, $y)
+	AddRecordedRoutePoint($x, $y, 'Sweep')
+	Local $count = UBound($route_recorder_sweeps)
+	ReDim $route_recorder_sweeps[$count + 1]
+	$route_recorder_sweeps[$count] = UBound($route_recorder_points) - 1
+EndFunc
+
+
 Func DistanceToLastRecordedPoint($x, $y)
 	Local $last = UBound($route_recorder_points) - 1
 	If $last < 0 Then Return 999999
@@ -138,17 +159,23 @@ Func WriteRecordedRoute($mapID)
 	Next
 	$code &= ']' & @CRLF & @CRLF
 
-	Local $sectionStart = 0
-	For $i = 0 To UBound($route_recorder_blessings) - 1
-		$code &= RecordedSectionCode($sectionStart, $route_recorder_blessings[$i][0] - 1)
-		$sectionStart = $route_recorder_blessings[$i][0]
-		$code &= "Info('Taking Blessing')" & @CRLF _
-			& 'GoToNPC(GetNearestNPCToCoords(' & $route_recorder_blessings[$i][1] & ', ' & $route_recorder_blessings[$i][2] & '))' & @CRLF _
-			& 'Sleep(1000)' & @CRLF
-		If $route_recorder_blessings[$i][3] Then $code &= 'Dialog(0x84)' & @CRLF & 'Sleep(1000)' & @CRLF
-		$code &= @CRLF
+	; A section ends before a blessing, after a sweep point, and at the end of the route
+	Local $sectionStart = 0, $blessing = 0, $sweep = 0, $endsWithSweep
+	For $next = 0 To $pointCount
+		$endsWithSweep = $sweep < UBound($route_recorder_sweeps) And $route_recorder_sweeps[$sweep] == $next - 1
+		If $endsWithSweep Then $sweep += 1
+		If Not $endsWithSweep And $next < $pointCount And Not ($blessing < UBound($route_recorder_blessings) And $route_recorder_blessings[$blessing][0] == $next) Then ContinueLoop
+		$code &= RecordedSectionCode($sectionStart, $next - 1, $endsWithSweep)
+		$sectionStart = $next
+		While $blessing < UBound($route_recorder_blessings) And $route_recorder_blessings[$blessing][0] == $next
+			$code &= "Info('Taking Blessing')" & @CRLF _
+				& 'GoToNPC(GetNearestNPCToCoords(' & $route_recorder_blessings[$blessing][1] & ', ' & $route_recorder_blessings[$blessing][2] & '))' & @CRLF _
+				& 'Sleep(1000)' & @CRLF
+			If $route_recorder_blessings[$blessing][3] Then $code &= 'Dialog(0x84)' & @CRLF & 'Sleep(1000)' & @CRLF
+			$code &= @CRLF
+			$blessing += 1
+		WEnd
 	Next
-	$code &= RecordedSectionCode($sectionStart, $pointCount - 1)
 	$code &= 'If HuntVanquishLeftovers($foes, $FARM_DURATION) == $FAIL Then Return $FAIL' & @CRLF
 
 	Local $file = FileOpen(@ScriptDir & '/logs/route-' & $mapID & '.au3', $FO_OVERWRITE + $FO_CREATEPATH + $FO_UTF8)
@@ -161,7 +188,8 @@ Func WriteRecordedRoute($mapID)
 EndFunc
 
 
-Func RecordedSectionCode($first, $last)
+Func RecordedSectionCode($first, $last, $withSweep)
 	If $last < $first Then Return ''
-	Return 'If ClearVanquishSection($foes, ' & $first & ', ' & $last & ', $FARM_DURATION) == $FAIL Then Return $FAIL' & @CRLF & @CRLF
+	Return 'If ClearVanquishSection($foes, ' & $first & ', ' & $last & ', $FARM_DURATION' & ($withSweep ? ', ' & $ROUTE_RECORDER_SWEEP_TIMEOUT_CODE : '') _
+		& ') == $FAIL Then Return $FAIL' & @CRLF & @CRLF
 EndFunc

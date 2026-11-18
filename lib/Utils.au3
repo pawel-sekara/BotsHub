@@ -1263,7 +1263,29 @@ Func ChaseFoesOnCompass($timer, $timeout, $log, ByRef $unreachableFoes)
 			$unreachableFoes[$foeID] = True
 		EndIf
 	WEnd
+	If Not GetAreaVanquished() Then LogFoesOnCompass()
 	Return $SUCCESS
+EndFunc
+
+
+;~ Diagnostic for foes the chase cannot finish (e.g. burrowed Snow Wurms) - logs every foe agent on compass once,
+;~ including those rejected by EnemyAgentFilter, so their state in memory can be inspected
+Func LogFoesOnCompass()
+	Local Static $loggedFoes[]
+	Local $me = GetMyAgent()
+	Local $agents = GetAgentArray($ID_AGENT_TYPE_NPC)
+	For $agent In $agents
+		If DllStructGetData($agent, 'Allegiance') <> $ID_ALLEGIANCE_FOE Then ContinueLoop
+		If GetDistance($me, $agent) > $RANGE_COMPASS Then ContinueLoop
+		Local $key = DllStructGetData($agent, 'ID') & '-' & DllStructGetData($agent, 'ModelState') & '-' & DllStructGetData($agent, 'Effects')
+		If MapExists($loggedFoes, $key) Then ContinueLoop
+		$loggedFoes[$key] = True
+		Warn('Foe left on compass: ID ' & DllStructGetData($agent, 'ID') & ' ModelID ' & DllStructGetData($agent, 'ModelID') _
+			& ' at ' & Round(DllStructGetData($agent, 'X')) & ', ' & Round(DllStructGetData($agent, 'Y')) _
+			& ' HP ' & DllStructGetData($agent, 'HealthPercent') & ' TypeMap ' & DllStructGetData($agent, 'TypeMap') _
+			& ' Effects ' & DllStructGetData($agent, 'Effects') & ' ModelState ' & DllStructGetData($agent, 'ModelState') _
+			& ' passes filter: ' & EnemyAgentFilter($agent))
+	Next
 EndFunc
 
 

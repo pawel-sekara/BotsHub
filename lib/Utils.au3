@@ -1465,7 +1465,7 @@ Func UseSkillSequentially($target, $options = $default_move_aggro_kill_options)
 		PingSleep(100)
 		; if no skill energy cost map is provided then attempt to use skills anyway
 		Local $sufficientEnergy = $skillsCostMap == Null ? True : (GetEnergy() >= $skillsCostMap[$i])
-		If $sufficientEnergy And IsRecharged($i) Then
+		If $sufficientEnergy And IsRecharged($i) And Not IsFaithfulInterventionActiveForSlot($i) Then
 			UseSkillEx($i, $target)
 			PingSleep(100)
 		EndIf
@@ -1473,6 +1473,13 @@ Func UseSkillSequentially($target, $options = $default_move_aggro_kill_options)
 		If IsPlayerDead() Then ExitLoop
 		If $abortCondition <> Null And $abortCondition() Then Return
 	WEnd
+EndFunc
+
+
+;~ Recasting Faithful Intervention while its effect is still up only wastes energy and time
+Func IsFaithfulInterventionActiveForSlot($skillSlot)
+	If GetSkillbarSkillID($skillSlot) <> $ID_FAITHFUL_INTERVENTION Then Return False
+	Return GetEffectTimeRemaining(GetEffect($ID_FAITHFUL_INTERVENTION)) > 0
 EndFunc
 
 

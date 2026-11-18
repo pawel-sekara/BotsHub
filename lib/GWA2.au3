@@ -791,6 +791,7 @@ Func WaitMapLoading($mapID = -1, $deadlockTime = 10000, $waitingTime = 2500)
 	PingSleep($waitingTime + 250)
 	; Farms enter their explorable areas through here, so one call covers them without touching each farm
 	UseInfiniteConsumables()
+	UseFaithfulInterventionFromSlot5()
 	Return True
 EndFunc
 #EndRegion Travel

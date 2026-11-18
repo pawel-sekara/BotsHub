@@ -935,6 +935,13 @@ Func UseSkillExNew($skillSlot, $target = Null, $timeout = 5000)
 EndFunc
 
 
+Func UseFaithfulInterventionFromSlot5()
+	If GetMapType() <> $ID_EXPLORABLE Then Return
+	If GetSkillbarSkillID(5) <> $ID_FAITHFUL_INTERVENTION Then Return
+	UseSkillEx(5)
+EndFunc
+
+
 ;~ UseSkillEx version more risky for weird skills with no recast or such - but with less RPM calls
 Func UseSkillEx($skillSlot, $target = Null)
 	If IsPlayerDead() Or Not IsRecharged($skillSlot) Then Return False

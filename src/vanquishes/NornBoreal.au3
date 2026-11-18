@@ -121,6 +121,7 @@ Func VanquishIceCliffChasms()
 		[9796,	21024,	'Group'	], _
 		[8758,	20269,	'Moving'	], _
 		[7742,	19484,	'Marked point'	], _
+		[6553,	18962,	'Patrol sweep'	], _
 		[7265,	18351,	'Moving'	], _
 		[7741,	17649,	'Marked point'	], _
 		[7224,	16534,	'Moving'	], _
@@ -270,31 +271,33 @@ Func VanquishIceCliffChasms()
 	GoToNPC(GetNearestNPCToCoords(10313, 25359))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 52, 64, $NORN_BOREAL_FARM_DURATION) == $FAIL Then Return $FAIL
+	; Split so the compass sweep runs at 58 - the patrol there is skipped by the route alone
+	If ClearVanquishSection($foes, 52, 58, $NORN_BOREAL_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 59, 65, $NORN_BOREAL_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(5389, 11922))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 65, 127, $NORN_BOREAL_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 66, 128, $NORN_BOREAL_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(-7659, -2221))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 128, 147, $NORN_BOREAL_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 129, 148, $NORN_BOREAL_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(7174, -9465))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 148, 161, $NORN_BOREAL_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 149, 162, $NORN_BOREAL_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(2401, -15537))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 162, 180, $NORN_BOREAL_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 163, 181, $NORN_BOREAL_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	If HuntVanquishLeftovers($foes, $NORN_BOREAL_FARM_DURATION) == $FAIL Then Return $FAIL
 

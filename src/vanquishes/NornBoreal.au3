@@ -227,6 +227,7 @@ Func VanquishIceCliffChasms()
 		[5554,	-13707,	'Group'	], _
 		[6031,	-14903,	'Moving'	], _
 		[6165,	-15327,	'Marked point'	], _
+		[6133,	-15911,	'Patrol sweep'	], _
 		[4967,	-15637,	'Moving'	], _
 		[3680,	-15719,	'Moving'	], _
 		[2462,	-15546,	'Moving'	], _
@@ -294,13 +295,15 @@ Func VanquishIceCliffChasms()
 	GoToNPC(GetNearestNPCToCoords(7174, -9465))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 150, 163, $NORN_BOREAL_FARM_DURATION) == $FAIL Then Return $FAIL
+	; Split so the compass sweep runs at 161
+	If ClearVanquishSection($foes, 150, 161, $NORN_BOREAL_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 162, 164, $NORN_BOREAL_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(2401, -15537))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 164, 182, $NORN_BOREAL_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 165, 183, $NORN_BOREAL_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	If HuntVanquishLeftovers($foes, $NORN_BOREAL_FARM_DURATION) == $FAIL Then Return $FAIL
 

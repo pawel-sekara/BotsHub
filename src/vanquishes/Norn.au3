@@ -166,25 +166,26 @@ Func VanquishVarajarFells()
 	GoToNPC(GetNearestNPCToCoords(-11282, 5466))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 16, 18, $NORN_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 16, 18, $NORN_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(-22751, 14163))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 19, 21, $NORN_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 19, 21, $NORN_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(-2290, 14879))
 	Sleep(1000)
 
+	; No compass sweep here - it would get stuck chasing the griffins
 	If ClearVanquishSection($foes, 22, 32, $NORN_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(24522, -6532))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 33, 39, $NORN_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 33, 39, $NORN_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(8963, 4043))
@@ -196,7 +197,7 @@ Func VanquishVarajarFells()
 	GoToNPC(GetNearestNPCToCoords(22961, 12757))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 42, 43, $NORN_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 42, 43, $NORN_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(13714, 14520))

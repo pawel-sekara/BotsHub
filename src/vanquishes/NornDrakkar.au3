@@ -213,6 +213,9 @@ Func VanquishDrakkarLake()
 		[3228,	-24,	'Group'	], _
 		[2365,	816,	'Moving'	], _
 		[1495,	1777,	'Group'	], _
+		[800,	2450,	'Moving'	], _
+		[200,	3000,	'Group'	], _
+		[1495,	1777,	'Moving'	], _
 		[767,	780,	'Moving'	], _
 		[268,	-402,	'Group'	], _
 		[-113,	-1628,	'Moving'	], _
@@ -407,43 +410,43 @@ Func VanquishDrakkarLake()
 	GoToNPC(GetNearestNPCToCoords(4297, 5538))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 138, 157, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
-	If ClearVanquishSection($foes, 158, 164, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
-	If ClearVanquishSection($foes, 165, 172, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
-	If ClearVanquishSection($foes, 173, 183, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
-	If ClearVanquishSection($foes, 184, 193, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
-	If ClearVanquishSection($foes, 194, 198, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
-	If ClearVanquishSection($foes, 199, 210, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
-	If ClearVanquishSection($foes, 211, 223, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
-	If ClearVanquishSection($foes, 224, 228, $NORN_DRAKKAR_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 138, 160, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 161, 167, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 168, 175, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 176, 186, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 187, 196, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 197, 201, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 202, 213, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 214, 226, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 227, 231, $NORN_DRAKKAR_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(15233, -17127))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 229, 241, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
-	If ClearVanquishSection($foes, 242, 249, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
-	If ClearVanquishSection($foes, 250, 253, $NORN_DRAKKAR_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 232, 244, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 245, 252, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 253, 256, $NORN_DRAKKAR_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(5897, -23446))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 254, 268, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
-	If ClearVanquishSection($foes, 269, 272, $NORN_DRAKKAR_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 257, 271, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 272, 275, $NORN_DRAKKAR_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(-11560, -20852))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 273, 285, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
-	If ClearVanquishSection($foes, 286, 307, $NORN_DRAKKAR_FARM_DURATION) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 276, 288, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 289, 310, $NORN_DRAKKAR_FARM_DURATION) == $FAIL Then Return $FAIL
 
 	Info('Taking Blessing')
 	GoToNPC(GetNearestNPCToCoords(-5160, -4251))
 	Sleep(1000)
 
-	If ClearVanquishSection($foes, 308, 314, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
+	If ClearVanquishSection($foes, 311, 317, $NORN_DRAKKAR_FARM_DURATION, 3 * 60 * 1000) == $FAIL Then Return $FAIL
 
 	If HuntVanquishLeftovers($foes, $NORN_DRAKKAR_FARM_DURATION) == $FAIL Then Return $FAIL
 
